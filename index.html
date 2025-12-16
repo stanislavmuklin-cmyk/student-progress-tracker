@@ -834,13 +834,37 @@
         }
 
         function clearReport() {
-            document.getElementById('dayIncomeInput').value = '0';
-            document.getElementById('linksInput').value = '0';
-            document.getElementById('leadsInput').value = '0';
-            document.getElementById('botsInput').value = '0';
-            document.getElementById('callsInput').value = '0';
-            document.getElementById('hoursInput').value = '0';
-        }
+    // сбросить поля ввода
+    document.getElementById('dayIncomeInput').value = '0';
+    document.getElementById('linksInput').value = '0';
+    document.getElementById('leadsInput').value = '0';
+    document.getElementById('botsInput').value = '0';
+    document.getElementById('callsInput').value = '0';
+    document.getElementById('hoursInput').value = '0';
+
+    // полностью сбросить данные ученика
+    studentData = {
+        monthIncome: 0,
+        activeLinks: 0,
+        newLeads: 0,
+        botsLaunched: 0,
+        streak: 0,
+        incomeGoal: 100000,
+        linksGoal: 15,
+        leadsGoal: 50
+    };
+
+    // очистить историю
+    const metricsList = document.getElementById('metricsList');
+    metricsList.innerHTML = '';
+
+    // обновить UI и удалить сохранённые данные
+    updateAllMetrics();
+    localStorage.removeItem('studentData');
+
+    showNotification('Все показатели сброшены до 0 ✅');
+}
+
 
         function showNotification(message) {
             const notification = document.createElement('div');
