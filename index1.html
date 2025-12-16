@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Progress Tracker - Кабинет ученика</title>
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --color-bg: #0f172a;
+            --color-surface: #1e293b;
+            --color-border: #334155;
+            --color-text: #f1f5f9;
+            --color-text-secondary: #cbd5e1;
+            --teal-glow: #06b6d4;
+            --duration: 300ms;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--color-bg);
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%);
+            color: var(--color-text);
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #06b6d4, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* MAIN STATS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(38, 99, 235, 0.1), rgba(6, 182, 212, 0.05));
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all var(--duration) ease;
+            cursor: pointer;
+        }
+
+        .stat-card:hover {
+            background: linear-gradient(135deg, rgba(38, 99, 235, 0.15), rgba(6, 182, 212, 0.1));
+            border-color: var(--teal-glow);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--color-text);
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: var(--color-success);
+            font-weight: 600;
+        }
+
+        .stat-change.negative {
+            color: var(--color-danger);
+        }
+
+        /* PROGRESS SECTION */
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            color: var(--color-text);
+        }
+
+        .progress-container {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .progress-label-left {
+            color: var(--color-text);
+            font-weight: 600;
+        }
+
+        .progress-label-right {
+            color: var(--color-success);
+            font-weight: 700;
+        }
+
+        .progress-bar-bg {
+            width: 100%;
+            height: 24px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--color-border);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal-glow), var(--color-primary));
+            border-radius: 12px;
+            transition: width 500ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 8px;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .progress-text {
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+            mix-blend-mode: lighten;
+        }
+
+        /* DAILY REPORT */
+        .daily-report {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .daily-report h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: var(--color-text);
+        }
+
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input-field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-field label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .input-field input,
+        .input-field select {
+            background: rgba(51, 65, 85, 0.5);
+            border: 1px solid var(--color-border);
+            color: var(--color-text);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all var(--duration) ease;
+            font-family: inherit;
+        }
+
+        .input-field input::placeholder {
+            color: rgba(203, 213, 225, 0.5);
+        }
+
+        .input-field input:focus,
+        .input-field select:focus {
+            outline: none;
+            border-color: var(--teal-glow);
+            background: rgba(51, 65, 85, 0.7);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .input-field select {
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--duration) ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--teal-glow), var(--color-primary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(6, 182, 212, 0.4);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: rgba(51, 65, 85, 0.5);
+            color: var(--color-text);
+            border: 1px solid var(--color-border);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(51, 65, 85, 0.7);
+            border-color: var(--teal-glow);
+        }
+
+        .btn-icon {
+            font-size: 16px;
+        }
+
+        /* METRICS LIST */
+        .metrics-list {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .metric-item {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.6), rgba(30, 41, 59, 0.6));
+            border: 1px solid var(--color-border);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--duration) ease;
+        }
+
+        .metric-item:hover {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            border-color: var(--teal-glow);
+        }
+
+        .metric-info {
+            flex: 1;
+        }
+
+        .metric-name {
+            font-size: 14px;
+            color: var(--color-text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+
+        .metric-change {
+            font-size: 12px;
+            color: var(--color-success);
+            margin-top: 3px;
+        }
+
+        .metric-change.down {
+            color: var(--color-warning);
+        }
+
+        .metric-badge {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--teal-glow);
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* STREAK */
+        .streak-container {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 182, 212, 0.05));
+            border: 2px solid var(--color-success);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .streak-label {
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .streak-value {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--color-success);
+            margin-bottom: 5px;
+        }
+
+        .streak-text {
+            font-size: 14px;
+            color: var(--color-text);
+        }
+
+        /* CHARTS */
+        .chart-container {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            height: 200px;
+            gap: 10px;
+        }
+
+        .bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--teal-glow), var(--color-primary));
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            min-height: 20px;
+            transition: all var(--duration) ease;
+            cursor: pointer;
+            box-shadow: 0 -4px 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .bar:hover {
+            background: linear-gradient(180deg, var(--color-primary), var(--teal-glow));
+            box-shadow: 0 -6px 25px rgba(6, 182, 212, 0.4);
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: var(--color-text-secondary);
+            white-space: nowrap;
+        }
+
+        .bar-value {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--teal-glow);
+            white-space: nowrap;
+        }
+
+        /* NOTIFICATION */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, var(--color-success), #059669);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            animation: slideIn 300ms ease;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        .notification.hide {
+            animation: slideOut 300ms ease forwards;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 12px;
+            }
+
+            .header {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .user-info {
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .input-group {
+                grid-template-columns: 1fr;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .chart {
+                height: 150px;
+            }
+
+            .streak-value {
+                font-size: 36px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div>
+                <h1>🚀 Мой Прогресс</h1>
+            </div>
+            <div class="user-info">
+                <div class="user-name">Иван Смирнов</div>
+                <div class="user-role">Ученик клуба</div>
+            </div>
+        </div>
+
+        <!-- MAIN STATS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">💰 Доход за месяц</div>
+                <div class="stat-value" id="monthIncome">₽45,600</div>
+                <div class="stat-change">↑ +12,400 от прошлого месяца</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">🔗 Активные связки</div>
+                <div class="stat-value" id="activeLinks">8</div>
+                <div class="stat-change">↑ +3 на этой неделе</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">👥 Новые лиды</div>
+                <div class="stat-value" id="newLeads">24</div>
+                <div class="stat-change">↑ +8 сегодня</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">🤖 Чат-боты запущено</div>
+                <div class="stat-value" id="botsLaunched">5</div>
+                <div class="stat-change">↑ +1 на этой неделе</div>
+            </div>
+        </div>
+
+        <!-- STREAK -->
+        <div class="streak-container">
+            <div class="streak-label">🔥 Твоя серия (Streak)</div>
+            <div class="streak-value" id="streakDays">12</div>
+            <div class="streak-text">Дней подряд ты заполняешь отчет — держи в тонусе! 💪</div>
+        </div>
+
+        <!-- PROGRESS TO GOAL -->
+        <h2 class="section-title">📊 Прогресс к целям</h2>
+
+        <div class="progress-container">
+            <div class="progress-label">
+                <span class="progress-label-left">Доход: 100,000₽</span>
+                <span class="progress-label-right" id="incomePercent">45.6%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="incomeBar" style="width: 45.6%;">
+                    <span class="progress-text">45.6%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-label">
+                <span class="progress-label-left">Активные связки: 15</span>
+                <span class="progress-label-right" id="linksPercent">53.3%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="linksBar" style="width: 53.3%;">
+                    <span class="progress-text">53.3%</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-label">
+                <span class="progress-label-left">Лиды для конверсии: 50</span>
+                <span class="progress-label-right" id="leadsPercent">48%</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="leadsBar" style="width: 48%;">
+                    <span class="progress-text">48%</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAILY REPORT -->
+        <h2 class="section-title">📝 Заполни сегодняшний отчёт</h2>
+
+        <div class="daily-report">
+            <h3>Сегодня ты сделал(а):</h3>
+
+            <div class="input-group">
+                <div class="input-field">
+                    <label>💰 Доход за день (₽)</label>
+                    <input type="number" id="dayIncomeInput" placeholder="0" value="0">
+                </div>
+
+                <div class="input-field">
+                    <label>🔗 Запущено связок</label>
+                    <input type="number" id="linksInput" placeholder="0" value="0">
+                </div>
+
+                <div class="input-field">
+                    <label>👥 Новых лидов</label>
+                    <input type="number" id="leadsInput" placeholder="0" value="0">
+                </div>
+
+                <div class="input-field">
+                    <label>🤖 Чат-ботов настроено</label>
+                    <input type="number" id="botsInput" placeholder="0" value="0">
+                </div>
+
+                <div class="input-field">
+                    <label>📞 Звонков/Диалогов</label>
+                    <input type="number" id="callsInput" placeholder="0" value="0">
+                </div>
+
+                <div class="input-field">
+                    <label>⏱️ Часов работал(а)</label>
+                    <input type="number" id="hoursInput" placeholder="0" step="0.5" value="0">
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="submitReport()">
+                    <span class="btn-icon">✅</span> Сохранить отчёт
+                </button>
+                <button class="btn btn-secondary" onclick="clearReport()">
+                    <span class="btn-icon">🔄</span> Очистить
+                </button>
+            </div>
+        </div>
+
+        <!-- WEEKLY CHART -->
+        <h2 class="section-title">📈 Доход за неделю</h2>
+
+        <div class="chart-container">
+            <div class="chart" id="weeklyChart">
+                <div class="bar" style="height: 40%;">
+                    <span class="bar-value">4,200₽</span>
+                    <span class="bar-label">Пн</span>
+                </div>
+                <div class="bar" style="height: 55%;">
+                    <span class="bar-value">5,800₽</span>
+                    <span class="bar-label">Вт</span>
+                </div>
+                <div class="bar" style="height: 62%;">
+                    <span class="bar-value">6,500₽</span>
+                    <span class="bar-label">Ср</span>
+                </div>
+                <div class="bar" style="height: 48%;">
+                    <span class="bar-value">5,200₽</span>
+                    <span class="bar-label">Чт</span>
+                </div>
+                <div class="bar" style="height: 75%;">
+                    <span class="bar-value">8,100₽</span>
+                    <span class="bar-label">Пт</span>
+                </div>
+                <div class="bar" style="height: 68%;">
+                    <span class="bar-value">7,200₽</span>
+                    <span class="bar-label">Сб</span>
+                </div>
+                <div class="bar" style="height: 52%;">
+                    <span class="bar-value">5,600₽</span>
+                    <span class="bar-label">Вс</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- RECENT METRICS -->
+        <h2 class="section-title">📋 История действий</h2>
+
+        <div class="metrics-list" id="metricsList">
+            <div class="metric-item">
+                <div class="metric-info">
+                    <div class="metric-name">Запуск связки "Email + Telegram"</div>
+                    <div class="metric-value">+3,400₽</div>
+                    <div class="metric-change">Сегодня, 14:30</div>
+                </div>
+                <div class="metric-badge">Успешно</div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-info">
+                    <div class="metric-name">Первый чат-бот для клиента</div>
+                    <div class="metric-value">+2,100₽</div>
+                    <div class="metric-change">Вчера, 16:45</div>
+                </div>
+                <div class="metric-badge">Успешно</div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-info">
+                    <div class="metric-name">Генерация 8 новых лидов</div>
+                    <div class="metric-value">+8 контактов</div>
+                    <div class="metric-change down">Статус: На обработке</div>
+                </div>
+                <div class="metric-badge">В работе</div>
+            </div>
+
+            <div class="metric-item">
+                <div class="metric-info">
+                    <div class="metric-name">Завершена воронка "Услуга разработки"</div>
+                    <div class="metric-value">+4,200₽</div>
+                    <div class="metric-change">Позавчера, 11:20</div>
+                </div>
+                <div class="metric-badge">Успешно</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage
+        let studentData = {
+            monthIncome: 45600,
+            activeLinks: 8,
+            newLeads: 24,
+            botsLaunched: 5,
+            streak: 12,
+            incomeGoal: 100000,
+            linksGoal: 15,
+            leadsGoal: 50
+        };
+
+        // Initialize on page load
+        window.addEventListener('load', () => {
+            updateAllMetrics();
+            loadSavedData();
+        });
+
+        function updateAllMetrics() {
+            // Update main stats
+            document.getElementById('monthIncome').textContent = `₽${studentData.monthIncome.toLocaleString('ru-RU')}`;
+            document.getElementById('activeLinks').textContent = studentData.activeLinks;
+            document.getElementById('newLeads').textContent = studentData.newLeads;
+            document.getElementById('botsLaunched').textContent = studentData.botsLaunched;
+            document.getElementById('streakDays').textContent = studentData.streak;
+
+            // Update progress bars
+            const incomePercent = Math.min((studentData.monthIncome / studentData.incomeGoal) * 100, 100);
+            const linksPercent = Math.min((studentData.activeLinks / studentData.linksGoal) * 100, 100);
+            const leadsPercent = Math.min((studentData.newLeads / studentData.leadsGoal) * 100, 100);
+
+            document.getElementById('incomeBar').style.width = incomePercent + '%';
+            document.getElementById('incomePercent').textContent = incomePercent.toFixed(1) + '%';
+
+            document.getElementById('linksBar').style.width = linksPercent + '%';
+            document.getElementById('linksPercent').textContent = linksPercent.toFixed(1) + '%';
+
+            document.getElementById('leadsBar').style.width = leadsPercent + '%';
+            document.getElementById('leadsPercent').textContent = leadsPercent.toFixed(1) + '%';
+
+            // Update progress bar text
+            document.querySelectorAll('.progress-bar-fill .progress-text').forEach((el, idx) => {
+                if (idx === 0) el.textContent = incomePercent.toFixed(0) + '%';
+                else if (idx === 1) el.textContent = linksPercent.toFixed(0) + '%';
+                else if (idx === 2) el.textContent = leadsPercent.toFixed(0) + '%';
+            });
+        }
+
+        function submitReport() {
+            const dayIncome = parseInt(document.getElementById('dayIncomeInput').value) || 0;
+            const links = parseInt(document.getElementById('linksInput').value) || 0;
+            const leads = parseInt(document.getElementById('leadsInput').value) || 0;
+            const bots = parseInt(document.getElementById('botsInput').value) || 0;
+
+            if (dayIncome === 0 && links === 0 && leads === 0 && bots === 0) {
+                showNotification('⚠️ Пожалуйста, заполни хотя бы одно поле!');
+                return;
+            }
+
+            // Update data
+            studentData.monthIncome += dayIncome;
+            studentData.activeLinks += links;
+            studentData.newLeads += leads;
+            studentData.botsLaunched += bots;
+            studentData.streak += 1;
+
+            // Clear inputs
+            clearReport();
+
+            // Update UI
+            updateAllMetrics();
+
+            // Show notification
+            showNotification('✅ Отчёт сохранён! Отличная работа! 🎉');
+
+            // Save to localStorage
+            saveData();
+
+            // Add to history
+            addToHistory(dayIncome, links, leads, bots);
+        }
+
+        function clearReport() {
+            document.getElementById('dayIncomeInput').value = '0';
+            document.getElementById('linksInput').value = '0';
+            document.getElementById('leadsInput').value = '0';
+            document.getElementById('botsInput').value = '0';
+            document.getElementById('callsInput').value = '0';
+            document.getElementById('hoursInput').value = '0';
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('hide');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        function saveData() {
+            localStorage.setItem('studentData', JSON.stringify(studentData));
+        }
+
+        function loadSavedData() {
+            const saved = localStorage.getItem('studentData');
+            if (saved) {
+                studentData = JSON.parse(saved);
+                updateAllMetrics();
+            }
+        }
+
+        function addToHistory(income, links, leads, bots) {
+            const metricsList = document.getElementById('metricsList');
+            const newItem = document.createElement('div');
+            newItem.className = 'metric-item';
+            
+            const now = new Date();
+            const time = now.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+
+            let content = '';
+            if (income > 0) content += `💰 ${income.toLocaleString('ru-RU')}₽ `;
+            if (links > 0) content += `🔗 ${links} связок `;
+            if (leads > 0) content += `👥 ${leads} лидов `;
+            if (bots > 0) content += `🤖 ${bots} ботов `;
+
+            newItem.innerHTML = `
+                <div class="metric-info">
+                    <div class="metric-name">Отчёт за день</div>
+                    <div class="metric-value">${content}</div>
+                    <div class="metric-change">Сегодня, ${time}</div>
+                </div>
+                <div class="metric-badge">Учтено</div>
+            `;
+
+            metricsList.insertBefore(newItem, metricsList.firstChild);
+        }
+
+        // Интерактивность для карточек
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-2px)';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
