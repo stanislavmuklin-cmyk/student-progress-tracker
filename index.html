@@ -854,16 +854,20 @@
         leadsGoal: 50
     };
 
+    // ОБНУЛЯЕМ НЕДЕЛЬНЫЙ ДОХОД (добавь это)
+    weeklyIncome = [0, 0, 0, 0, 0, 0, 0]; // если у тебя другая переменная — поставь её имя
+
     // очистить историю
     const metricsList = document.getElementById('metricsList');
     metricsList.innerHTML = '';
 
     // обновить UI и удалить сохранённые данные
-    updateAllMetrics();
+    updateAllMetrics();      // здесь внутри должна использоваться weeklyIncome
     localStorage.removeItem('studentData');
 
     showNotification('Все показатели сброшены до 0 ✅');
 }
+
 
 
         function showNotification(message) {
