@@ -555,33 +555,33 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">💰 Доход за месяц</div>
-                <div class="stat-value" id="monthIncome">₽45,600</div>
-                <div class="stat-change">↑ +12,400 от прошлого месяца</div>
+                <div class="stat-value" id="monthIncome">₽0</div>
+                <div class="stat-change">↑ +0 от прошлого месяца</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-label">🔗 Активные связки</div>
-                <div class="stat-value" id="activeLinks">8</div>
-                <div class="stat-change">↑ +3 на этой неделе</div>
+                <div class="stat-value" id="activeLinks">0</div>
+                <div class="stat-change">↑ +0 на этой неделе</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-label">👥 Новые лиды</div>
-                <div class="stat-value" id="newLeads">24</div>
-                <div class="stat-change">↑ +8 сегодня</div>
+                <div class="stat-value" id="newLeads">0</div>
+                <div class="stat-change">↑ +0 сегодня</div>
             </div>
 
             <div class="stat-card">
                 <div class="stat-label">🤖 Чат-боты запущено</div>
-                <div class="stat-value" id="botsLaunched">5</div>
-                <div class="stat-change">↑ +1 на этой неделе</div>
+                <div class="stat-value" id="botsLaunched">0</div>
+                <div class="stat-change">↑ +0 на этой неделе</div>
             </div>
         </div>
 
         <!-- STREAK -->
         <div class="streak-container">
             <div class="streak-label">🔥 Твоя серия (Streak)</div>
-            <div class="streak-value" id="streakDays">12</div>
+            <div class="streak-value" id="streakDays">0</div>
             <div class="streak-text">Дней подряд ты заполняешь отчет — держи в тонусе! 💪</div>
         </div>
 
@@ -591,11 +591,11 @@
         <div class="progress-container">
             <div class="progress-label">
                 <span class="progress-label-left">Доход: 100,000₽</span>
-                <span class="progress-label-right" id="incomePercent">45.6%</span>
+                <span class="progress-label-right" id="incomePercent">0%</span>
             </div>
             <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="incomeBar" style="width: 45.6%;">
-                    <span class="progress-text">45.6%</span>
+                <div class="progress-bar-fill" id="incomeBar" style="width: 0%;">
+                    <span class="progress-text">0%</span>
                 </div>
             </div>
         </div>
@@ -603,11 +603,11 @@
         <div class="progress-container">
             <div class="progress-label">
                 <span class="progress-label-left">Активные связки: 15</span>
-                <span class="progress-label-right" id="linksPercent">53.3%</span>
+                <span class="progress-label-right" id="linksPercent">0%</span>
             </div>
             <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="linksBar" style="width: 53.3%;">
-                    <span class="progress-text">53.3%</span>
+                <div class="progress-bar-fill" id="linksBar" style="width: 0%;">
+                    <span class="progress-text">0%</span>
                 </div>
             </div>
         </div>
@@ -615,11 +615,11 @@
         <div class="progress-container">
             <div class="progress-label">
                 <span class="progress-label-left">Лиды для конверсии: 50</span>
-                <span class="progress-label-right" id="leadsPercent">48%</span>
+                <span class="progress-label-right" id="leadsPercent">0%</span>
             </div>
             <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="leadsBar" style="width: 48%;">
-                    <span class="progress-text">48%</span>
+                <div class="progress-bar-fill" id="leadsBar" style="width: 0%;">
+                    <span class="progress-text">0%</span>
                 </div>
             </div>
         </div>
@@ -666,7 +666,7 @@
                 <button class="btn btn-primary" onclick="submitReport()">
                     <span class="btn-icon">✅</span> Сохранить отчёт
                 </button>
-                <button class="btn btn-secondary" onclick="clearReport()">
+                <button class="btn btn-secondary" onclick="clearInputs()">
                     <span class="btn-icon">🔄</span> Очистить
                 </button>
             </div>
@@ -677,32 +677,32 @@
 
         <div class="chart-container">
             <div class="chart" id="weeklyChart">
-                <div class="bar" style="height: 40%;">
-                    <span class="bar-value">4,200₽</span>
+                <div class="bar" id="bar0" style="height: 0%;">
+                    <span class="bar-value">₽0</span>
                     <span class="bar-label">Пн</span>
                 </div>
-                <div class="bar" style="height: 55%;">
-                    <span class="bar-value">5,800₽</span>
+                <div class="bar" id="bar1" style="height: 0%;">
+                    <span class="bar-value">₽0</span>
                     <span class="bar-label">Вт</span>
                 </div>
-                <div class="bar" style="height: 62%;">
-                    <span class="bar-value">6,500₽</span>
+                <div class="bar" id="bar2" style="height: 0%;">
+                    <span class="bar-value">₽0</span>
                     <span class="bar-label">Ср</span>
                 </div>
-                <div class="bar" style="height: 48%;">
-                    <span class="bar-value">5,200₽</span>
+                <div class="bar" id="bar3" style="height: 0%;">
+                    <span class="bar-value">₽0</span>
                     <span class="bar-label">Чт</span>
                 </div>
-                <div class="bar" style="height: 75%;">
-                    <span class="bar-value">8,100₽</span>
+                <div class="bar" id="bar4" style="height: 0%;">
+                    <span class="bar-value">₽0</span>
                     <span class="bar-label">Пт</span>
                 </div>
-                <div class="bar" style="height: 68%;">
-                    <span class="bar-value">7,200₽</span>
+                <div class="bar" id="bar5" style="height: 0%;">
+                    <span class="bar-value">₽0</span>
                     <span class="bar-label">Сб</span>
                 </div>
-                <div class="bar" style="height: 52%;">
-                    <span class="bar-value">5,600₽</span>
+                <div class="bar" id="bar6" style="height: 0%;">
+                    <span class="bar-value">₽0</span>
                     <span class="bar-label">Вс</span>
                 </div>
             </div>
@@ -714,38 +714,11 @@
         <div class="metrics-list" id="metricsList">
             <div class="metric-item">
                 <div class="metric-info">
-                    <div class="metric-name">Запуск связки "Email + Telegram"</div>
-                    <div class="metric-value">+3,400₽</div>
-                    <div class="metric-change">Сегодня, 14:30</div>
+                    <div class="metric-name">Добро пожаловать! 👋</div>
+                    <div class="metric-value">Начни заполнять отчёты</div>
+                    <div class="metric-change">Ждём твоих результатов</div>
                 </div>
-                <div class="metric-badge">Успешно</div>
-            </div>
-
-            <div class="metric-item">
-                <div class="metric-info">
-                    <div class="metric-name">Первый чат-бот для клиента</div>
-                    <div class="metric-value">+2,100₽</div>
-                    <div class="metric-change">Вчера, 16:45</div>
-                </div>
-                <div class="metric-badge">Успешно</div>
-            </div>
-
-            <div class="metric-item">
-                <div class="metric-info">
-                    <div class="metric-name">Генерация 8 новых лидов</div>
-                    <div class="metric-value">+8 контактов</div>
-                    <div class="metric-change down">Статус: На обработке</div>
-                </div>
-                <div class="metric-badge">В работе</div>
-            </div>
-
-            <div class="metric-item">
-                <div class="metric-info">
-                    <div class="metric-name">Завершена воронка "Услуга разработки"</div>
-                    <div class="metric-value">+4,200₽</div>
-                    <div class="metric-change">Позавчера, 11:20</div>
-                </div>
-                <div class="metric-badge">Успешно</div>
+                <div class="metric-badge">Готово</div>
             </div>
         </div>
     </div>
@@ -753,21 +726,24 @@
     <script>
         // Data storage
         let studentData = {
-            monthIncome: 45600,
-            activeLinks: 8,
-            newLeads: 24,
-            botsLaunched: 5,
-            streak: 12,
+            monthIncome: 0,
+            activeLinks: 0,
+            newLeads: 0,
+            botsLaunched: 0,
+            streak: 0,
             incomeGoal: 100000,
             linksGoal: 15,
-            leadsGoal: 50
+            leadsGoal: 50,
             totalIncome: 0
         };
 
+        // Weekly income tracking
+        let weeklyIncome = [0, 0, 0, 0, 0, 0, 0];
+
         // Initialize on page load
         window.addEventListener('load', () => {
-            updateAllMetrics();
             loadSavedData();
+            updateAllMetrics();
         });
 
         function updateAllMetrics() {
@@ -785,19 +761,31 @@
 
             document.getElementById('incomeBar').style.width = incomePercent + '%';
             document.getElementById('incomePercent').textContent = incomePercent.toFixed(1) + '%';
+            document.getElementById('incomeBar').querySelector('.progress-text').textContent = incomePercent.toFixed(0) + '%';
 
             document.getElementById('linksBar').style.width = linksPercent + '%';
             document.getElementById('linksPercent').textContent = linksPercent.toFixed(1) + '%';
+            document.getElementById('linksBar').querySelector('.progress-text').textContent = linksPercent.toFixed(0) + '%';
 
             document.getElementById('leadsBar').style.width = leadsPercent + '%';
             document.getElementById('leadsPercent').textContent = leadsPercent.toFixed(1) + '%';
+            document.getElementById('leadsBar').querySelector('.progress-text').textContent = leadsPercent.toFixed(0) + '%';
 
-            // Update progress bar text
-            document.querySelectorAll('.progress-bar-fill .progress-text').forEach((el, idx) => {
-                if (idx === 0) el.textContent = incomePercent.toFixed(0) + '%';
-                else if (idx === 1) el.textContent = linksPercent.toFixed(0) + '%';
-                else if (idx === 2) el.textContent = leadsPercent.toFixed(0) + '%';
-            });
+            // Update weekly chart
+            updateWeeklyChart();
+        }
+
+        function updateWeeklyChart() {
+            const maxIncome = Math.max(...weeklyIncome, 1);
+            const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            
+            for (let i = 0; i < 7; i++) {
+                const bar = document.getElementById(`bar${i}`);
+                const height = (weeklyIncome[i] / maxIncome) * 100;
+                bar.style.height = height + '%';
+                bar.querySelector('.bar-value').textContent = `₽${weeklyIncome[i].toLocaleString('ru-RU')}`;
+                bar.querySelector('.bar-label').textContent = days[i];
+            }
         }
 
         function submitReport() {
@@ -819,8 +807,13 @@
             studentData.botsLaunched += bots;
             studentData.streak += 1;
 
+            // Add to weekly income (current day - index 0 for Monday logic)
+            const today = new Date().getDay();
+            const dayIndex = today === 0 ? 6 : today - 1;
+            weeklyIncome[dayIndex] += dayIncome;
+
             // Clear inputs
-            clearReport();
+            clearInputs();
 
             // Update UI
             updateAllMetrics();
@@ -835,45 +828,50 @@
             addToHistory(dayIncome, links, leads, bots);
         }
 
-        function clearReport() {
-    // сбросить поля ввода
-    document.getElementById('dayIncomeInput').value = '0';
-    document.getElementById('linksInput').value = '0';
-    document.getElementById('leadsInput').value = '0';
-    document.getElementById('botsInput').value = '0';
-    document.getElementById('callsInput').value = '0';
-    document.getElementById('hoursInput').value = '0';
+        function clearInputs() {
+            // Только очистить поля ввода, НЕ сбрасывать данные
+            document.getElementById('dayIncomeInput').value = '0';
+            document.getElementById('linksInput').value = '0';
+            document.getElementById('leadsInput').value = '0';
+            document.getElementById('botsInput').value = '0';
+            document.getElementById('callsInput').value = '0';
+            document.getElementById('hoursInput').value = '0';
+        }
 
-    // полностью сбросить данные ученика
-studentData = {
-  monthIncome: 0,
-  activeLinks: 0,
-  newLeads: 0,
-  botsLaunched: 0,
-  streak: 0,
-  incomeGoal: 100000,
-  linksGoal: 15,
-  leadsGoal: 50,
-  totalIncome: 0
-};
-saveData();
-
-
-    // ОБНУЛЯЕМ НЕДЕЛЬНЫЙ ДОХОД (добавь это)
-    weeklyIncome = [0, 0, 0, 0, 0, 0, 0]; // если у тебя другая переменная — поставь её имя
-
-    // очистить историю
-    const metricsList = document.getElementById('metricsList');
-    metricsList.innerHTML = '';
-
-    // обновить UI и удалить сохранённые данные
-    updateAllMetrics();      // здесь внутри должна использоваться weeklyIncome
-    localStorage.removeItem('studentData');
-
-    showNotification('Все показатели сброшены до 0 ✅');
-}
-
-
+        function resetAllData() {
+            // Полный сброс всех данных (кнопка Сброс Всех Данных)
+            if (confirm('⚠️ Вы уверены? Это удалит ВСЕ данные!')) {
+                studentData = {
+                    monthIncome: 0,
+                    activeLinks: 0,
+                    newLeads: 0,
+                    botsLaunched: 0,
+                    streak: 0,
+                    incomeGoal: 100000,
+                    linksGoal: 15,
+                    leadsGoal: 50,
+                    totalIncome: 0
+                };
+                weeklyIncome = [0, 0, 0, 0, 0, 0, 0];
+                
+                document.getElementById('metricsList').innerHTML = `
+                    <div class="metric-item">
+                        <div class="metric-info">
+                            <div class="metric-name">Добро пожаловать! 👋</div>
+                            <div class="metric-value">Начни заполнять отчёты</div>
+                            <div class="metric-change">Ждём твоих результатов</div>
+                        </div>
+                        <div class="metric-badge">Готово</div>
+                    </div>
+                `;
+                
+                clearInputs();
+                updateAllMetrics();
+                localStorage.removeItem('studentData');
+                localStorage.removeItem('weeklyIncome');
+                showNotification('✅ Все данные сброшены!');
+            }
+        }
 
         function showNotification(message) {
             const notification = document.createElement('div');
@@ -889,15 +887,19 @@ saveData();
 
         function saveData() {
             localStorage.setItem('studentData', JSON.stringify(studentData));
+            localStorage.setItem('weeklyIncome', JSON.stringify(weeklyIncome));
         }
 
         function loadSavedData() {
             const saved = localStorage.getItem('studentData');
+            const savedWeekly = localStorage.getItem('weeklyIncome');
+            
             if (saved) {
                 studentData = JSON.parse(saved);
-                if (studentData.totalIncome === undefined) studentData.totalIncome = 0;
-
-                updateAllMetrics();
+            }
+            
+            if (savedWeekly) {
+                weeklyIncome = JSON.parse(savedWeekly);
             }
         }
 
@@ -927,7 +929,7 @@ saveData();
             metricsList.insertBefore(newItem, metricsList.firstChild);
         }
 
-        // Интерактивность для карточек
+        // Interactive for cards
         document.querySelectorAll('.stat-card').forEach(card => {
             card.addEventListener('click', function() {
                 this.style.transform = 'scale(0.98)';
