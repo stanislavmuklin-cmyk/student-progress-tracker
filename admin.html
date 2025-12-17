@@ -684,6 +684,27 @@
                 grid-template-columns: 1fr;
             }
         }
+        .filters-group {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filters-group::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .filters-group::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+
+  .filters-group .filter-btn {
+    flex-shrink: 0;
+  }
     </style>
 </head>
 <body>
