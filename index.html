@@ -761,6 +761,7 @@
             incomeGoal: 100000,
             linksGoal: 15,
             leadsGoal: 50
+            totalIncome: 0
         };
 
         // Initialize on page load
@@ -812,6 +813,7 @@
 
             // Update data
             studentData.monthIncome += dayIncome;
+            studentData.totalIncome += dayIncome;
             studentData.activeLinks += links;
             studentData.newLeads += leads;
             studentData.botsLaunched += bots;
@@ -843,16 +845,19 @@
     document.getElementById('hoursInput').value = '0';
 
     // полностью сбросить данные ученика
-    studentData = {
-        monthIncome: 0,
-        activeLinks: 0,
-        newLeads: 0,
-        botsLaunched: 0,
-        streak: 0,
-        incomeGoal: 100000,
-        linksGoal: 15,
-        leadsGoal: 50
-    };
+studentData = {
+  monthIncome: 0,
+  activeLinks: 0,
+  newLeads: 0,
+  botsLaunched: 0,
+  streak: 0,
+  incomeGoal: 100000,
+  linksGoal: 15,
+  leadsGoal: 50,
+  totalIncome: 0
+};
+saveData();
+
 
     // ОБНУЛЯЕМ НЕДЕЛЬНЫЙ ДОХОД (добавь это)
     weeklyIncome = [0, 0, 0, 0, 0, 0, 0]; // если у тебя другая переменная — поставь её имя
@@ -890,6 +895,8 @@
             const saved = localStorage.getItem('studentData');
             if (saved) {
                 studentData = JSON.parse(saved);
+                if (studentData.totalIncome === undefined) studentData.totalIncome = 0;
+
                 updateAllMetrics();
             }
         }
